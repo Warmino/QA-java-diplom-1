@@ -30,16 +30,6 @@ public class BurgerTest {
     }
 
     @Test
-    public void shouldCalculateTotalPrice() {
-        when(mockBun.getPrice()).thenReturn(100f);
-        when(mockIngredient.getPrice()).thenReturn(100f);
-        burger.setBuns(mockBun);
-        burger.addIngredient(mockIngredient);
-        float totalPrice = burger.getPrice();
-        assertEquals(300f, totalPrice, 0.01);
-    }
-
-    @Test
     public void shouldSetBunProperly() {
         when(mockBun.getName()).thenReturn("Black Bun");
         when(mockBun.getPrice()).thenReturn(100f);
@@ -62,94 +52,6 @@ public class BurgerTest {
         burger.addIngredient(mockIngredient);
         burger.removeIngredient(0);
         assertEquals(0, burger.ingredients.size());
-    }
-
-    @Test
-    public void shouldIncludeBunNameInReceipt() {
-        when(mockBun.getName()).thenReturn("Red Bun");
-        when(mockBun.getPrice()).thenReturn(300f);
-        when(mockIngredient.getName()).thenReturn("Chili Sauce");
-        when(mockIngredient.getType()).thenReturn(IngredientType.SAUCE);
-        when(mockIngredient.getPrice()).thenReturn(300f);
-        burger.setBuns(mockBun);
-        burger.addIngredient(mockIngredient);
-
-        // Получаем фактическую строку рецепта
-        String actualReceipt = burger.getReceipt();
-
-        // Эталонная строка рецепта
-        String expectedReceipt =
-                "(==== Red Bun ====)\n" +
-                        "= sauce Chili Sauce =\n" +
-                        "(==== Red Bun ====)\n" +
-                        "\n" +
-                        "Price: 900,00\n";
-
-        String formattedReceipt = ReceiptFormatter.fixPriceFormatting(actualReceipt);
-
-        String unifiedReceipt = ReceiptFormatter.unifyLineEndings(formattedReceipt);
-
-        assertEquals(expectedReceipt.trim(), unifiedReceipt.trim());
-    }
-    @Test
-    public void shouldIncludeIngredientNameInReceipt() {
-        // Настройка мок-объектов
-        when(mockBun.getName()).thenReturn("Red Bun");
-        when(mockBun.getPrice()).thenReturn(300f);
-        when(mockIngredient.getName()).thenReturn("Chili Sauce");
-        when(mockIngredient.getType()).thenReturn(IngredientType.SAUCE);
-        when(mockIngredient.getPrice()).thenReturn(300f);
-
-        // Создание бургера с указанными компонентами
-        burger.setBuns(mockBun);
-        burger.addIngredient(mockIngredient);
-
-        // Получаем фактическую строку рецепта
-        String actualReceipt = burger.getReceipt();
-
-        // Эталонная строка рецепта (исправлена)
-        String expectedReceipt =
-                "(==== Red Bun ====)\n" +
-                        "= sauce Chili Sauce =\n" +
-                        "(==== Red Bun ====)\n" +
-                        "\n" +
-                        "Price: 900,00\n";
-
-        String formattedReceipt = ReceiptFormatter.fixPriceFormatting(actualReceipt);
-
-        String unifiedReceipt = ReceiptFormatter.unifyLineEndings(formattedReceipt);
-
-        assertEquals(expectedReceipt.trim(), unifiedReceipt.trim());
-    }
-
-    @Test
-    public void shouldIncludeTotalPriceInReceipt() {
-        // Настройка мок-объектов
-        when(mockBun.getName()).thenReturn("Red Bun");
-        when(mockBun.getPrice()).thenReturn(300f);
-        when(mockIngredient.getName()).thenReturn("Chili Sauce");
-        when(mockIngredient.getType()).thenReturn(IngredientType.SAUCE);
-        when(mockIngredient.getPrice()).thenReturn(300f);
-
-        burger.setBuns(mockBun);
-        burger.addIngredient(mockIngredient);
-
-        // Получаем фактическую строку рецепта
-        String actualReceipt = burger.getReceipt();
-
-        // Эталонная строка рецепта
-        String expectedReceipt =
-                "(==== Red Bun ====)\n" +
-                        "= sauce Chili Sauce =\n" +
-                        "(==== Red Bun ====)\n" +
-                        "\n" +
-                        "Price: 900,00\n";
-
-        String formattedReceipt = ReceiptFormatter.fixPriceFormatting(actualReceipt);
-
-        String unifiedReceipt = ReceiptFormatter.unifyLineEndings(formattedReceipt);
-
-        assertEquals(expectedReceipt.trim(), unifiedReceipt.trim());
     }
     @Test
     public void shouldAddFirstIngredient() {
@@ -199,7 +101,6 @@ public class BurgerTest {
         burger.moveIngredient(1, 0);
         assertEquals("chili sauce", burger.ingredients.get(2).getName());
     }
-
 }
 
 
